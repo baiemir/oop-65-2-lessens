@@ -7,45 +7,45 @@ from faker import Faker
 
 
 # Инициализация (по умолчанию на английском)
-fake = Faker()
+# fake = Faker()
 
 # Генерация различных данных
-print(fake.name())      # Случайное имя (например, "John Doe")
-print(fake.address())   # Случайный адрес
-print(fake.email())     # Случайный email
-print(fake.text())      # Случайный текст
+# print(fake.name())      # Случайное имя (например, "John Doe")
+# print(fake.address())   # Случайный адрес
+# print(fake.email())     # Случайный email
+# print(fake.text())      # Случайный текст
 
 # Инициализация для русского языка
-fake = Faker('ru_Ru')
-
-print(fake.name())      # Например, "Иванов Иван"
-print(fake.address())   # Адрес в РФ
-print(fake.email())     # Телефон в формате РФ
+# fake = Faker('ru_Ru')
+#
+# print(fake.name())      # Например, "Иванов Иван"
+# print(fake.address())   # Адрес в РФ
+# print(fake.email())     # Телефон в формате РФ
 
 # Инициализация для японского языка
-fake = Faker('ja_Jp')
+#fake = Faker('ja_Jp')
 
 # Создаем список из 5 случайных пользователей
-user = []
-for _ in range(5): # Заставляет программу пвоторить действие 5 раз если бы мы хотели видеть номер
+#user = []
+#for _ in range(5): # Заставляет программу пвоторить действие 5 раз если бы мы хотели видеть номер
     # пользователя то написали бы for i in range(5)
 
-    users = {
-    'fake_name': fake.name(),
-     'fake_address': fake.address(),
-     'fake_email': fake.email(),
-     'fake_phone_number': fake.phone_number(),
-        'fake_text': fake.word()
-    }
-    user.append(users) # Это ключевой момент в работе со списками в Пайтон.
+    # users = {
+    # 'fake_name': fake.name(),
+    #  'fake_address': fake.address(),
+    #  'fake_email': fake.email(),
+    #  'fake_phone_number': fake.phone_number(),
+    #     'fake_text': fake.word()
+    # }
+    #user.append(users) # Это ключевой момент в работе со списками в Пайтон.
     # В коде отвечает за сохранение каждого созданного словаря в общий список
 
-print(user)
+#print(user)
 
 # Сгенерирует 10 уникальных email-адресов
-for _ in range(10):
-    print(fake.unique.email())      # Если нам нужны неповторяющиеся данные используем: .unique
-    print(fake.unique.name())
+# for _ in range(10):
+#     print(fake.unique.email())      # Если нам нужны неповторяющиеся данные используем: .unique
+#     print(fake.unique.name())
 
 # Популярные методы Faker
 
@@ -59,3 +59,45 @@ for _ in range(10):
 # fake.text()     # Текст
 # fake.word()     #  Случайное слово
 # fake.sentence() # Предложение
+
+
+# Использование в коде
+
+import random
+
+import random
+from faker import Faker # Импортируем библиотеку для создания поддельных данных
+
+# Создаем объект Faker с русской локализацией
+fake = Faker('ru_RU')
+
+# Создаем пустой список, который будет нашей "базой данных"
+employees_list = []
+
+# ЦИКЛ 1: Генерация данных
+# Используем range(5), чтобы повторить процесс 5 раз
+for _ in range(5):
+    # ВАЖНО: Создаем словарь ВНУТРИ цикла.
+    # Благодаря этому на каждом круге (итерации) Faker генерирует НОВОЕ имя.
+    # Если бы это было вне цикла, у нас было бы 5 копий одного и того же человека.
+    employee = {
+        'fake_name': fake.name(),      # Генерирует случайное ФИО
+        'fake_job': fake.job(),        # Генерирует случайную профессию
+        'fake_salary': random.randint(30000, 70000), # Случайное число для зарплаты
+    }
+
+    # Метод .append() берет созданный словарь и "кладет" его в наш список
+    employees_list.append(employee)
+
+# ЦИКЛ 2: Вывод данных в столбик
+# Проходимся по уже заполненному списку
+for person in employees_list:
+    # person — это переменная, которая по очереди становится каждым словарем из списка.
+    # Мы используем f-строку и обращаемся к данным по КЛЮЧАМ, которые задали выше.
+    # Ошибка "string indices must be integers" тут не возникнет,
+    # так как мы берем данные из словаря person, а не вызываем функции заново.
+    print(f"Имя: {person['fake_name']} | Должность: {person['fake_job']} | Зарплата: {person['fake_salary']} сом")
+
+# В конце выводим весь список целиком, чтобы увидеть структуру "список словарей"
+print("\nВесь список (технический вид):")
+print(employees_list)
